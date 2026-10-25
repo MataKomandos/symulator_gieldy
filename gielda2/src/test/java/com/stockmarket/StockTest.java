@@ -1,6 +1,6 @@
 package com.stockmarket;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +15,7 @@ public class StockTest {
     private final Stock stock3 = new Stock("TSLA", "Tesla Inc.", 800.0);    // Inny symbol
 
     @Test
-    public void testStockCreationAndGetters() {
+    void testStockCreationAndGetters() {
         // Weryfikacja poprawności tworzenia obiektu i działania getterów
         assertEquals("CDR", stock1.getSymbol(), "Symbol powinien być poprawnie ustawiony.");
         assertEquals("CD Projekt S.A.", stock1.getName(), "Nazwa powinna być poprawnie ustawiona.");
@@ -23,25 +23,25 @@ public class StockTest {
     }
 
     @Test
-    public void testEquals_SameSymbolDifferentDetails() {
+    void testEquals_SameSymbolDifferentDetails() {
         // Weryfikacja, że akcje z tym samym symbolem są równe, niezależnie od ceny i nazwy
         assertTrue(stock1.equals(stock2), "Akcje o tym samym symbolu powinny być równe.");
     }
 
     @Test
-    public void testEquals_DifferentSymbol() {
+    void testEquals_DifferentSymbol() {
         // Weryfikacja nierówności dla różnych symboli
         assertFalse(stock1.equals(stock3), "Akcje o różnych symbolach nie powinny być równe.");
     }
 
     @Test
-    public void testHashCode_Consistency() {
+    void testHashCode_Consistency() {
         // Weryfikacja, że obiekty równe mają ten sam hash code
         assertEquals(stock1.hashCode(), stock2.hashCode(), "Obiekty równe (ten sam symbol) muszą mieć ten sam hash code.");
     }
 
     @Test
-    public void testHashCode_Difference() {
+    void testHashCode_Difference() {
         // Weryfikacja, że obiekty różne mają zazwyczaj różne hash codes
         assertNotEquals(stock1.hashCode(), stock3.hashCode(), "Obiekty różne (różne symbole) powinny mieć różne hash codes.");
     }
