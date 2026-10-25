@@ -1,5 +1,11 @@
 # Stock market simulator
 
+**Polski** | [English](README.en.md)
+
+![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-build-C71A36?logo=apachemaven&logoColor=white)
+![JUnit 5](https://img.shields.io/badge/JUnit%205-25%20test%C3%B3w-25A162?logo=junit5&logoColor=white)
+
 Silnik portfela inwestycyjnego w Javie. Ten sam kod kupuje akcje, surowce i waluty, a każdy rodzaj aktywa sam wie, ile kosztuje zakup i ile naprawdę jest wart. Projekt ilustruje abstrakcję i polimorfizm: `Portfolio` nigdzie nie sprawdza typu aktywa.
 
 ## Model
@@ -11,6 +17,36 @@ Silnik portfela inwestycyjnego w Javie. Ten sam kod kupuje akcje, surowce i walu
 | `Currency` (waluta) | cena × ilość | (cena − spread) × ilość, czyli cena kupna po stronie Bid |
 
 `Asset` to klasa abstrakcyjna z dwiema metodami do nadpisania: `calculateAcquisitionCost(int)` i `calculateRealValue(int)`. `Portfolio` wywołuje je polimorficznie, bez `instanceof`.
+
+```mermaid
+classDiagram
+    class Asset {
+        <<abstract>>
+        -String symbol
+        -String name
+        #double currentPrice
+        +calculateAcquisitionCost(int quantity) double*
+        +calculateRealValue(int quantity) double*
+    }
+    class Share {
+        -double TRANSACTION_FEE = 5.0$
+    }
+    class Commodity {
+        -double baseStorageRate
+    }
+    class Currency {
+        -double spread
+    }
+    class Portfolio {
+        -double cash
+        +buyAsset(Asset asset, int quantity)
+        +calculateTotalNetWorth() double
+    }
+    Asset <|-- Share
+    Asset <|-- Commodity
+    Asset <|-- Currency
+    Portfolio o-- "*" Asset : holdings
+```
 
 Zachowanie portfela:
 
